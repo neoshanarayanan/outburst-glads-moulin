@@ -1,0 +1,16 @@
+*.asv
+*.fig
+*.mat
+*.mex*
+*.bak
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+*.bin
+*.queue
+*.toolkits
+*.outlog
+*.errlog
+*.tar.gz
