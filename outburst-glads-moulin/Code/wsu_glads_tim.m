@@ -1,3 +1,6 @@
+% This is Tim Hill's code from his Github repo for ISSM SHMIP
+% Modified by Neosha Narayanan on March 10, 2026
+
 steps=[1:3];
 
 if any(steps==1) 
@@ -34,7 +37,9 @@ if any(steps==2)
     % Outlet at the terminus
     md.hydrology.spcphi = NaN(md.mesh.numberofvertices,1);
 	%pos=find(md.mesh.vertexonboundary & md.mesh.x==min(md.mesh.x));
-	pos = find(md.mesh.vertexonboundary & md.mesh.x>=6.95719e5 & md.mesh.x<=6.95884e5 & md.mesh.y>= 3.950420e6); % from shakti simulations on totten 
+	%pos = find(md.mesh.vertexonboundary & md.mesh.x>=6.95719e5 & md.mesh.x<=6.95884e5 & md.mesh.y>= 3.9506e6); % from shakti simulations on totten 
+	%pos = find(md.mesh.vertexonboundary & md.mesh.y>=3.9501e6);
+	pos = find(md.mesh.vertexonboundary);
 	md.hydrology.spcphi(pos)=0;
     
     ic_head = md.materials.rho_ice/md.materials.rho_freshwater*md.geometry.thickness + md.geometry.base;
@@ -57,7 +62,6 @@ if any(steps==3)
 	md.transient.ishydrology=1;
 
 	% Specify that you want to run the model on your current computer
-	% Change the number of processors according to your machine (here np=4)
 	md.cluster=generic('np',10);
 
 	% Define the time stepping scheme: run for 90 days with a time step of 1 hr
@@ -89,8 +93,10 @@ if any(steps==3)
     md.miscellaneous.name = 'kyagar';
     md = setmask(md,'','');
 
+
+	md.settings.output_frequency = 48;
 	md.verbose.solution=1;
 	md=solve(md,'Transient');
-	description = 'wsu_glads_tim.m, March 10, 30 days with temperate ice base';
-	save('/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/Spinups/wsu_glads.mat', 'md');
+	description = 'wsu_glads_tim.m, March 11, 30 days with temperate ice base, spcphi=0 on all boundaries';
+	save('/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/Spinups/wsu_glads_pw0.mat', 'description', 'md', '-v7.3');
 end
