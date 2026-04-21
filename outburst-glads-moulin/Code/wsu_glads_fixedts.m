@@ -67,10 +67,10 @@ if any(steps==3)
 	% Define the time stepping scheme: run for 90 days with a time step of 1 hr
    % md.timestepping=timesteppingadaptive();
    % md.timestepping.time_step_min=1/md.constants.yts;
- 	md.timestepping.time_step=3600/md.constants.yts; % Time step (in years)
+ 	md.timestepping.time_step=1800/md.constants.yts; % Time step (in years)
 %     md.timestepping.time_step_min
 	md.timestepping.start_time = 0/365;
-	md.timestepping.final_time=30/365;
+	md.timestepping.final_time=365/365;
 
 	% %Add one moulin with steady input at x=500, y=500
 	% [a,pos] = min(sqrt((md.mesh.x-500).^2+(md.mesh.y-500).^2));
@@ -98,6 +98,6 @@ if any(steps==3)
 	md.settings.output_frequency = 48;
 	md.verbose.solution=1;
 	md=solve(md,'Transient');
-	description = 'wsu_glads_tim.m, March 12, 30 days with temperate ice base, spcphi=0 on all boundaries, 1hour timestep';
-	save('/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/Spinups/wsu_glads_fixedts.mat', 'description', 'md', '-v7.3');
+	description = 'wsu_glads_tim.m, March 16, 365  days with temperate ice base, spcphi=0 on all boundaries, 30mins timestep';
+	save('/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/Spinups/wsu_glads_standalone_365d.mat', 'description', 'md', '-v7.3');
 end

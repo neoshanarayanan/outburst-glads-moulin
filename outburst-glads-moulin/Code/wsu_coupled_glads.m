@@ -2,7 +2,8 @@
 % Input standalone winter spinup: 
 clear
 
-load kyagar_wsu_glads.mat
+load /home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/Spinups/wsu_glads_standalone_30d.mat
+
 %% Set flow law and velocity boundary conditions
 
 %md=setflowequation(md,'SSA','all');
@@ -36,8 +37,8 @@ disp('Setting hydrology initial conditions');
 pos=find(md.mesh.vertexonboundary & md.mesh.y>=3.9504e06);
 % The ylim that's been working for the outburst flood is 3.9505e6.
 
-
-md.hydrology.spcphi(pos)=md.geometry.base(pos); % Will need to change this
+md.hydrology.spcphi = NaN(md.mesh.numberofvertices, 1);
+md.hydrology.spcphi(pos) = 0;
 
 %% Set friction 
 disp('Setting friction');
@@ -68,5 +69,5 @@ md.settings.output_frequency = 5;
 md=solve(md,'Transient');
 
 % Save
-description = 'coupled wsu starting from kyagar_wsu_glads.mat, MOLHO, Budd, frictioncoeff = 1000, with 0 basal sliding and shear on edges';
+description = 'coupled wsu starting from wsu_glads_standalone_30d, MOLHO, Budd, frictioncoeff = 1000, with 0 basal sliding and shear on edges';
 save('/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/wsu_coupled_glads.mat', 'md', 'description', '-v7.3')

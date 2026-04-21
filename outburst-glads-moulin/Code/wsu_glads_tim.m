@@ -1,5 +1,7 @@
 % This is Tim Hill's code from his Github repo for ISSM SHMIP
 % Modified by Neosha Narayanan on March 10, 2026
+% This is currently NOT working very well due to the adaptive timestepping.
+% Refer instead to wsu_glads_fixedts.m for updated standalone winter spinup
 
 steps=[1:3];
 
