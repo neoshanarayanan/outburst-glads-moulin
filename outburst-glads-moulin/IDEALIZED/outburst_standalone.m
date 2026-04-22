@@ -110,7 +110,7 @@ md.settings.output_frequency=48;
 md.verbose.solution=1;
 
 % Compute
-md.cluster=generic('np', 20);
+md.cluster=generic('np', 32);
 md = solve(md, 'Transient');
 
 description = 'long leadup glof, starting from idealized.mat, max flux=1,  max gap height = 100m, 125 days';
