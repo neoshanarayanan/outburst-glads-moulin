@@ -89,4 +89,4 @@ md = solve(md, 'Transient');
 
 % Save
 description='starting from idealized.mat'
-save('Spinups/kyagar14_wsu_coupled_outflow.mat', 'md', 'description', '-v7.3')
+save('Spinups/kyagar14_wsu_coupled_outflow.mat', 'md', 'description','pos', '-v7.3')

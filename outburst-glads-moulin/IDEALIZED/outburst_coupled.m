@@ -1,7 +1,7 @@
 % Simulates outburst flood at Kyagar Glacier through ice-dammed lake at
 % the east side of the terminus through a Neumann flux BC
 % Neosha Narayanan, August 2025
-% Last updated: October 2025
+% Last updated: April 2026
 
 % This file was previously called kyagar_outburst_longleadup.m
 
@@ -10,11 +10,7 @@ clear
 %% Load from winter spinup
 
 
-%load Spinups/kyagar14_wsu_coupled.mat
-%load kyagar14_seasonal_coupled.mat
-%load Spinups/kyagar14_wsu_coupled_newfront.mat
-%load Spinups/kyagar14_wsu_coupled_outflow.mat
-load Spinups/kyagar14_coupled_wsu_C1_outflow.mat
+load ConnectedHydrologyResults/coupled_input20.mat
 
 disp('coupled model loaded')
 %% Set up model from the loaded spinup

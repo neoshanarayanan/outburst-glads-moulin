@@ -1,7 +1,7 @@
 % Simulates outburst flood at Kyagar Glacier through ice-dammed lake at
 % the east side of the terminus through a Neumann flux BC
 % Neosha Narayanan, August 2025
-% Last updated: September 2025
+% Last updated: April 2026 for idalized geometry
 
 % ^^ Taken from shakti-outburst-totten repo on April 21, 2026 for idealized
 % case with SHMIP geometry
@@ -11,8 +11,8 @@ clear all
 %% Load from winter spinup
 
 
-load Spinups/idealized.mat
-disp('standalone WSU loaded')
+load ConnectedHydrologyResults/coupled_input20.mat
+%disp('standalone WSU loaded')
 %% Set up model from the loaded spinup
 
 % Set new initial conditions (starting from end of previous run)
@@ -113,5 +113,5 @@ md.verbose.solution=1;
 md.cluster=generic('np', 32);
 md = solve(md, 'Transient');
 
-description = 'long leadup glof, starting from idealized.mat, max flux=1,  max gap height = 100m, 125 days';
-save('idealized_standalone_outburst.mat', 'md', 'description','pos', '-v7.3')
+description = 'long leadup glof, starting from coupled_input20.mat';
+save('idealized_coupled_outburst_connected20.mat', 'md', 'description','pos', '-v7.3')
