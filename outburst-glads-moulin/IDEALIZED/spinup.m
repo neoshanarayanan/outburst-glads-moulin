@@ -56,7 +56,8 @@ if any(steps==2)
     
     % Glacier front b.c.
     md.hydrology.spchead = NaN(md.mesh.numberofvertices,1);
-    pos = find(md.mesh.vertexonboundary & md.mesh.x<=50 & md.mesh.y<=50 & md.mesh.y>=-50); % Outflow location
+    %pos = find(md.mesh.vertexonboundary & md.mesh.x<=50 & md.mesh.y<=50 & md.mesh.y>=-50); % Outflow location
+    pos = find(md.mesh.vertexonboundary & md.mesh.x<=75 & md.mesh.y<=75 & md.mesh.y>=-50); % new outflow location set aug 13, 2026
     md.hydrology.spchead(pos)=md.geometry.base(pos); % Set atmospheric pressure b.c.
     
     md.hydrology.gap_height_max = 50;
@@ -110,8 +111,10 @@ if any(steps==3);
 
 	md.verbose.solution=1;
 	md=solve(md,'Transient');
+
+	description = 'new bigger outflow location';
     
-	save('Spinups/idealized.mat', 'md', 'pos', '-v7.3')
+	save('Spinups/idealized_outflow75.mat', 'md', 'description', 'pos', '-v7.3')
 
     f=md.materials.rho_freshwater./(md.materials.rho_ice.*md.geometry.thickness).*(md.results.TransientSolution(end).HydrologyHead-md.geometry.base); % Fraction of overburden
     Re=abs(md.results.TransientSolution(end).HydrologyBasalFlux)./1.787e-6; % Reynolds number

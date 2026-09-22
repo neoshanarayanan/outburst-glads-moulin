@@ -2,7 +2,8 @@
 % Input standalone winter spinup: 
 clear
 
-load Spinups/idealized.mat
+%load Spinups/idealized.mat
+load Spinups/idealized_outflow75.mat
 %% Set hydrological parameters
 md.hydrology.head = md.results.TransientSolution(end).HydrologyHead;
 md.hydrology.gap_height = md.results.TransientSolution(end).HydrologyGapHeight;
@@ -33,12 +34,15 @@ md.stressbalance.spcvz = NaN(md.mesh.numberofvertices,1);
 %min_pos = min(md.mesh.y(pos));
 %pos = find(md.mesh.vertexonboundary & md.mesh.y <= min_pos);
 
+% Set 'pos' as anything NOT on the outflow boundary (currently defined by pos)
+pos_boundary = find(md.mesh.vertexonboundary & md.mesh.x>75);
+
 %md.stressbalance.spcvx_base(pos)=0; % Set 0 basal sliding along lateral edges
-md.stressbalance.spcvy_base(pos)=0;
-md.stressbalance.spcvz(pos)=0;
-md.stressbalance.spcvy_shear(pos)=0; % Set 0 shear along lateral edges
-md.stressbalance.spcvx_shear(pos)=0;
-md.stressbalance.spcvx_base(pos) = 0; % added nov 20
+md.stressbalance.spcvy_base(pos_boundary)=0;
+md.stressbalance.spcvz(pos_boundary)=0;
+md.stressbalance.spcvy_shear(pos_boundary)=0; % Set 0 shear along lateral edges
+md.stressbalance.spcvx_shear(pos_boundary)=0;
+md.stressbalance.spcvx_base(pos_boundary) = 0; % added nov 20
 
 %% Set hydrology initial conditions
 
@@ -86,5 +90,5 @@ md=solve(md,'Transient');
 %md = solve(md, 'sb');
 
 % Save
-description = '';
-save('Spinups/coupled_shmip.mat', 'md', 'description', '-v7.3')
+description = 'from coupled_spinup.m, started from idealized_outflow75.mat';
+save('Spinups/idealized_coupled_outflow75.mat', 'md', 'description', '-v7.3')

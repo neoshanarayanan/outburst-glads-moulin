@@ -11,7 +11,9 @@ clear all
 %% Load from winter spinup
 
 
-load ConnectedHydrologyResults/coupled_input20.mat
+%load ConnectedHydrologyResults/coupled_input20.mat
+load ConnectedHydrologyResults/coupled_input05_C50.mat
+
 %disp('standalone WSU loaded')
 %% Set up model from the loaded spinup
 
@@ -46,7 +48,13 @@ segy = md.mesh.y(md.mesh.segments(:, 1));
 
 % Lake position
 %pos = md.mesh.segments(find(segy>3.949670e6 & segy<3.950010e6 & segx<=6.97269e5 & segx>=6.97027e5), 3); % Updated for kyagar10, from Li et al. 2023
-pos = md.mesh.segments(find(segy>300 & segx>=325 & segx <= 425), 3);
+%pos = md.mesh.segments(find(segy>300 & segx>=350 & segx <= 425), 3);
+pos = md.mesh.segments(find(segy>300 & segx>=425 & segy<=500), 3);
+
+%% Continue distributed input across the bed 
+
+md.hydrology.englacial_input=0.5*ones(md.mesh.numberofvertices+1, length(timevec));
+md.hydrology.englacial_input(end, :) = timevec;
 
 %% Create a long buildup (simulate lake getting bigger and bigger)
 
@@ -113,5 +121,5 @@ md.verbose.solution=1;
 md.cluster=generic('np', 32);
 md = solve(md, 'Transient');
 
-description = 'long leadup glof, starting from coupled_input20.mat';
-save('idealized_coupled_outburst_connected20.mat', 'md', 'description','pos', '-v7.3')
+description = 'long leadup glof from outburst.m, starting from coupled_input05_C50.mat, continuing distributed input';
+save('coupled_outburst_EI05_C50_loc2.mat', 'md', 'description','pos', '-v7.3')
