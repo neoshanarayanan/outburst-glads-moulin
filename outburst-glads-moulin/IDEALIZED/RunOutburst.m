@@ -1,22 +1,17 @@
+function [md, description, pos] = RunOutburst(md, lake_x, englinp)
+
+
 % Simulates outburst flood at Kyagar Glacier through ice-dammed lake at
 % the east side of the terminus through a Neumann flux BC
 % Neosha Narayanan, August 2025
 % Last updated: April 2026 for idalized geometry
-% Last run: September 2026
 
 % ^^ Taken from shakti-outburst-totten repo on April 21, 2026 for idealized
 % case with SHMIP geometry
 
 clear all
 
-%% Load from winter spinup
 
-
-load ('~/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Preconditions/coupled_input10.mat')
-%load ConnectedHydrologyResults/coupled_input05_C50.mat
-% for some reason the above ^ is showing no channels at all.
-
-%disp('standalone WSU loaded')
 %% Set up model from the loaded spinup
 
 % Set new initial conditions (starting from end of previous run)
@@ -51,11 +46,11 @@ segy = md.mesh.y(md.mesh.segments(:, 1));
 % Lake position
 %pos = md.mesh.segments(find(segy>3.949670e6 & segy<3.950010e6 & segx<=6.97269e5 & segx>=6.97027e5), 3); % Updated for kyagar10, from Li et al. 2023
 %pos = md.mesh.segments(find(segy>300 & segx>=350 & segx <= 425), 3) ; % location 1 in the paramsweep 1
-pos = md.mesh.segments(find(segy>300 & segx>=500 & segx <=575), 3); % loc2
+pos = md.mesh.segments(find(segy>300 & segx>=lake_x & segx <= lake_x+75), 3); % loc2
 
 %% Continue distributed input across the bed 
 
-md.hydrology.englacial_input=10*ones(md.mesh.numberofvertices+1, length(timevec));
+md.hydrology.englacial_input=englinp*ones(md.mesh.numberofvertices+1, length(timevec));
 md.hydrology.englacial_input(end, :) = timevec;
 
 %% Create a long buildup (simulate lake getting bigger and bigger)
@@ -123,5 +118,9 @@ md.verbose.solution=1;
 md.cluster=generic('np', 60);
 md = solve(md, 'Transient');
 
-description = 'long leadup glof from outburst.m, starting from coupled_input10.mat, continuing distributed input of 10';
-save('/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/coupled_outburst_EI10_loc2.mat', 'md', 'description','pos', '-v7.3')
+description = sprintf("long leadup glof from outburst.m, starting from coupled_input%d.mat, continuing distributed input of %d", englinp, englinp);
+filename = sprintf("coupled_outburst_EI%d.mat", englinp);
+save_path = "/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/";
+save(save_path+filename, 'md', 'description','pos', '-v7.3')
+
+end
