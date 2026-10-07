@@ -25,7 +25,7 @@ md.transient.isstressbalance=1; % Solve for ice velocity
 md.transient.ishydrology=1;
 
 md.friction.coupling = 4; % 4 is fully coupled
-%md.friction.coefficient = 100.*ones(md.mesh.numberofvertices, 1);
+md.friction.coefficient = 300.*ones(md.mesh.numberofvertices, 1);
 
 
 %% Set up timestepping
@@ -48,5 +48,5 @@ md.hydrology.englacial_input(end, :) = timevec;
 md = solve(md, 'Transient');
 
 % Save
-description='starting from idealized_coupled.mat, with a constant englacial input of 1 and friction coefficient of 300'
+description='starting from idealized_coupled.mat, with a constant englacial input of 1'
 save('AttemptsToSpeedUpGlacier/coupled_input1_C100_200d.mat', 'md', 'description', 'pos', '-v7.3')

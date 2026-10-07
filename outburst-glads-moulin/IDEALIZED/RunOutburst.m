@@ -3,11 +3,8 @@ function [md, description, pos] = RunOutburst(md, lake_x, englinp)
 
 % Simulates outburst flood at Kyagar Glacier through ice-dammed lake at
 % the east side of the terminus through a Neumann flux BC
-% Neosha Narayanan, August 2025
-% Last updated: April 2026 for idalized geometry
-
-% ^^ Taken from shakti-outburst-totten repo on April 21, 2026 for idealized
-% case with SHMIP geometry
+% Neosha Narayanan, October 2026
+% Taken from outburst.m in late September 2026
 
 clear all
 
