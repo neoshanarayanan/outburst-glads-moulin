@@ -1,4 +1,4 @@
-function [md, description, pos] = RunEnglacialInputPrecondition(md_coupledspinup, englinp, finaltime)
+function [md, description] = RunEnglacialInputPrecondition(md_coupledspinup, englinp, finaltime, pos)
 
 % Author: Neosha Narayanan, October 2026
 % This function takes a coupled winter spinup (md_coupledspinup) and
@@ -12,7 +12,6 @@ function [md, description, pos] = RunEnglacialInputPrecondition(md_coupledspinup
 % finaltime : number of days we want the simulation to run.
 
 md = md_coupledspinup;
-pos = pos;
 
 % Set hydrological parameters
 md.hydrology.head = md.results.TransientSolution(end).HydrologyHead;
@@ -50,7 +49,7 @@ md = solve(md, 'Transient');
 
 % Save
 description='starting from idealized_coupled.mat, with a constant englacial input of 1';
-filename = sprintf("coupled_input%d.mat", englinp);
-save('~/cos-lab-wchu/neosha/outburst_outputs/ParamSweep2_EnglInp/Preconditions/'+filename, 'md', 'description', 'pos', '-v7.3')
+filename = sprintf("coupled_input%f.mat", englinp);
+save('~/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Preconditions/'+filename, 'md', 'description', 'pos', '-v7.3')
 
 end

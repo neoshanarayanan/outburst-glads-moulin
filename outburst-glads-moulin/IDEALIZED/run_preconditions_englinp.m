@@ -4,17 +4,17 @@
 
 
 % Load spinup
-load Spinups/idealized.mat
+load Spinups/idealized_outflow75.mat
 pos = pos;
-clear('md', 'description')
+clear('md', 'description');
 load Spinups/idealized_coupled_outflow75.mat
 md_input = md;
 
 % Define parameters over which to run the parameter sweep
-englinps = 0.5:0.5:15;
+englinps = 9.0:0.5:15;
 
 for e = 1:length(englinps)
     englinp = englinps(e);
-    md, description, pos = RunEnglacialInputPrecondition(md_input, englinp, 500);
+    md, description, pos = RunEnglacialInputPrecondition(md_input, englinp, 500, pos);	    
     disp('saved')
 end
