@@ -1,12 +1,10 @@
-function [md, description, pos] = RunOutburst(md, lake_x, englinp)
+function [md, description,lake_pos] = RunOutburst(md, lake_x, englinp)
 
 
 % Simulates outburst flood at Kyagar Glacier through ice-dammed lake at
 % the east side of the terminus through a Neumann flux BC
 % Neosha Narayanan, October 2026
 % Taken from outburst.m in late September 2026
-
-clear all
 
 
 %% Set up model from the loaded spinup
@@ -43,7 +41,7 @@ segy = md.mesh.y(md.mesh.segments(:, 1));
 % Lake position
 %pos = md.mesh.segments(find(segy>3.949670e6 & segy<3.950010e6 & segx<=6.97269e5 & segx>=6.97027e5), 3); % Updated for kyagar10, from Li et al. 2023
 %pos = md.mesh.segments(find(segy>300 & segx>=350 & segx <= 425), 3) ; % location 1 in the paramsweep 1
-pos = md.mesh.segments(find(segy>300 & segx>=lake_x & segx <= lake_x+75), 3); % loc2
+lake_pos = md.mesh.segments(find(segy>300 & segx>=lake_x & segx <= lake_x+75), 3); % loc2
 
 %% Continue distributed input across the bed 
 
@@ -76,13 +74,13 @@ xlabel('Time (y)')
 
 
 % Assign hydrograph BC to each selected segment
-hydrograph = repmat(hydrograph, numel(pos), 1);
+hydrograph = repmat(hydrograph, numel(lake_pos), 1);
 
 
 % Now pass the BC to the model 
 md.hydrology.neumannflux = zeros(md.mesh.numberofelements+1, length(timevec));
 md.hydrology.neumannflux(end, :) = timevec; 
-md.hydrology.neumannflux(pos, floodtime_indices) = hydrograph;
+md.hydrology.neumannflux(lake_pos, floodtime_indices) = hydrograph;
 md.hydrology.neumannflux(end, :) = timevec; % redundancy
 
 % Set new max for hydrology gap height (NEW SEP 10)
@@ -112,12 +110,12 @@ md.settings.output_frequency=48;
 md.verbose.solution=1;
 
 % Compute
-md.cluster=generic('np', 60);
+md.cluster=generic('np', 40);
 md = solve(md, 'Transient');
 
 description = sprintf("long leadup glof from outburst.m, starting from coupled_input%d.mat, continuing distributed input of %d", englinp, englinp);
 filename = sprintf("coupled_outburst_EI%d.mat", englinp);
-save_path = "/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/";
-save(save_path+filename, 'md', 'description','pos', '-v7.3')
+save_path = "/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts/";
+save(save_path+filename, 'md', 'description','lake_pos', '-v7.3')
 
 end

@@ -11,7 +11,9 @@ load Spinups/idealized_coupled_outflow75.mat
 md_input = md;
 
 % Define parameters over which to run the parameter sweep
-englinps = 9.0:0.5:15;
+%englinps = 0.25:0.25:1; % this is what I ran for the param sweep
+
+englinps = 8.5;
 
 for e = 1:length(englinps)
     englinp = englinps(e);
