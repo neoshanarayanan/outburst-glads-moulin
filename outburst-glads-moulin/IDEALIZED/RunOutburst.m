@@ -114,8 +114,8 @@ md.cluster=generic('np', 40);
 md = solve(md, 'Transient');
 
 description = sprintf("long leadup glof from outburst.m, starting from coupled_input%d.mat, continuing distributed input of %d", englinp, englinp);
-filename = sprintf("coupled_outburst_EI%d.mat", englinp);
+filename = sprintf("coupled_outburst_EI%f.mat", englinp);
 save_path = "/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts/";
-save(save_path+filename, 'md', 'description','lake_pos', '-v7.3')
+save(save_path+filename, 'md', 'description','lake_pos','englinp' , '-v7.3')
 
 end
