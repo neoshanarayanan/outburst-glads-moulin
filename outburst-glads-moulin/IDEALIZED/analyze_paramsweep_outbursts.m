@@ -1,4 +1,6 @@
 % Analyze all outburst results
+% For use on moulin
+% Neosha Narayanan, October and November  2026
 
 myFolder = '/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts'; 
 
@@ -22,10 +24,10 @@ for k = 1 : length(theFiles)
     
     % Retrieve information
     [meandeltaN, maxVelDropx, maxVelDrop] = AnalyzeParamSweepOutburst(md, 15, 60);
-    meandeltaNs(k) = (englinp, meandeltaN);
-    maxVelDropxs(k) = (englinp, maxVelDropx);
-    maxVelDrops(k) = (englinp, maxVelDrop);
+    meandeltaNs(:, k) = [englinp, meandeltaN];
+    maxVelDropxs(:, k) = [englinp, maxVelDropx];
+    maxVelDrops(:, k) = [englinp, maxVelDrop];
     
 end
 
-save("data_outbursts.mat", 'meanDeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
+save("data_outbursts.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
