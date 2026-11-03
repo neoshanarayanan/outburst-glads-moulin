@@ -1,8 +1,8 @@
 % Analyze all outburst results
 % For use on moulin
-% Neosha Narayanan, October and November  2026
+% Neosha Narayanan, last modified November  2026
 
-myFolder = '/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts'; 
+myFolder = '/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts/Summaries/'; 
 
 % Get a list of all files matching a specific pattern (e.g., all files: '*.*')
 filePattern = fullfile(myFolder, '*.mat');
@@ -21,7 +21,7 @@ for k = 1 : length(theFiles)
 
     load(fullFileName);
     ei = englinp;
-    
+ 
     % Retrieve information
     [meandeltaN, maxVelDropx, maxVelDrop] = AnalyzeParamSweepOutburst(md, 15, 60);
     meandeltaNs(:, k) = [englinp, meandeltaN];
@@ -30,4 +30,4 @@ for k = 1 : length(theFiles)
     
 end
 
-save("data_outbursts.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
+save(myFolder+"data_outbursts_Nov3.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
