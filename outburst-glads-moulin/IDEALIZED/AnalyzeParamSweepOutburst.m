@@ -15,9 +15,13 @@ function [mean_deltaN, maxVelDrop, maxVelDrop_x] = AnalyzeParamSweepOutburst(md,
 % magnitude of slowdown, location of slowdown, change in effective pressure
 
 % 1. Get change in effective pressure
-N_before = mean(md.results.TransientSolution(flood_start_day-1).EffectivePressure, 'all');
-N_after = mean(md.results.TransientSolution(flood_end_day+3).EffectivePressure, 'all');
-mean_deltaN = N_after-N_before;
+%N_before = mean(md.results.TransientSolution(flood_start_day-1).EffectivePressure, 'all');
+%N_after = mean(md.results.TransientSolution(flood_end_day+3).EffectivePressure, 'all');
+%mean_deltaN = N_after-N_before;
+
+N_before = md.results.TransientSolution(flood_start_day-1).EffectivePressure;
+N_after = md.results.TransientSolution(flood_end_day+3).EffectivePressure;
+mean_deltaN = mean(N_before-N_after);
 
 % 2. Get magnitude and location of slowdown
 

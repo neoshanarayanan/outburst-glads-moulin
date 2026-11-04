@@ -13,7 +13,7 @@ md_input = md;
 % Define parameters over which to run the parameter sweep
 %englinps = 0.25:0.25:1; % this is what I ran for the param sweep
 
-englinps = 8.5;
+englinps = 0.1:0.1:1;
 
 for e = 1:length(englinps)
     englinp = englinps(e);

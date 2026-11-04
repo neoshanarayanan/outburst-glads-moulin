@@ -48,8 +48,8 @@ md.hydrology.englacial_input(end, :) = timevec;
 md = solve(md, 'Transient');
 
 % Save
-description='starting from idealized_coupled.mat, with a constant englacial input of 1';
-filename = sprintf("coupled_input%f.mat", englinp);
+description=sprintf('starting from idealized_coupled_outflow75.mat, with a constant englacial input of %f', englinp);
+filename = sprintf("coupled_input_diagnostic%f.mat", englinp);
 save('~/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Preconditions/'+filename, 'md', 'description', 'pos', '-v7.3')
 
 end
