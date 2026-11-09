@@ -2,7 +2,7 @@
 % For use on moulin
 % Neosha Narayanan, last modified November  2026
 
-myFolder = '/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts/Summaries/'; 
+myFolder = '/home/nnarayanan38/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_EnglInp/Outbursts/'; 
 
 % Get a list of all files matching a specific pattern (e.g., all files: '*.*')
 filePattern = fullfile(myFolder, '*.mat');
@@ -30,4 +30,4 @@ for k = 1 : length(theFiles)
     
 end
 
-save(myFolder+"data_outbursts_Nov3.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
+save(myFolder+"Summaries/data_outbursts_Nov9.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
