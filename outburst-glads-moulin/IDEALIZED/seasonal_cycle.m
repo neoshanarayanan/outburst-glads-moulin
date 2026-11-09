@@ -47,8 +47,8 @@ md.cluster = generic('np', 40);
 md = solve(md, 'Transient');
 
 description = 'seasonal_cycle.m, starting from idealized_coupled75.mat with seasonal cycle *5';
-directory = '~/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_Seasonal/';
-filename = 'seasonal_try1.mat';
+directory = "~/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_Seasonal/";
+filename = "seasonal_try1.mat";
 save(directory+filename, 'md', 'description', '-v7.3')
 
 
