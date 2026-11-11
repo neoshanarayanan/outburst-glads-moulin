@@ -3,6 +3,13 @@ function [description] = SeasonalOutburst(md, lake_x, outburst_day, buildup_dura
 % Simulate a seasonal cycle in an idealized glacier 
 % Neosha Narayanan, November 2026
 
+% Inputs:
+% md: an existing seasonal run (NOT a precondition)
+% lake_x: westward bound of lake coordinate
+% outburst_day: the day the flood happens (falling tail of neumann flux)
+% buildup_duration: the duration it takes for the lake to fill up
+% noise_amplitude: amplitude of noise to add to the seasonal signal
+
 ELA = 3000; % km
 
 % Starting hydrology conditions
@@ -80,9 +87,9 @@ md.hydrology.gap_height_max = 100;
 md.cluster = generic('np', 40);
 md = solve(md, 'Transient');
 
-description = 'seasonal cycle with noise plus outburst flood';
+description = sprintf("seasonal cycle with noise plus outburst floodon day %f", outburst_day);
 directory = "~/cos-lab-wchu38/neosha/outburst_outputs/ParamSweep2_Seasonal/";
-filename = "seasonal_NOISE10.mat";
+filename = sprintf("seasonal_NOISE10_day%f.mat", outburst_day);
 save(directory+filename, 'md', 'description', 'outburst_day', '-v7.3')
 
 disp('saved')
