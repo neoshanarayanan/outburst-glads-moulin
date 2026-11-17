@@ -21,6 +21,11 @@ function [mean_deltaN, maxVelDrop, maxVelDrop_x] = AnalyzeParamSweepOutburst(md,
 
 upterminus = find(md.mesh.x>50);
 
+duration = length(md.results.TransientSolution);
+if duration <= 10
+	return;
+end
+
 N_before = md.results.TransientSolution(flood_start_day-1).EffectivePressure;
 N_after = md.results.TransientSolution(flood_end_day+3).EffectivePressure;
 mean_deltaN = mean(N_before-N_after);
