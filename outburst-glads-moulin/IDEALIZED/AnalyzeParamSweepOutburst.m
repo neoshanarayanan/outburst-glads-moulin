@@ -21,8 +21,7 @@ function [mean_deltaN, maxVelDrop, maxVelDrop_x] = AnalyzeParamSweepOutburst(md,
 
 upterminus = find(md.mesh.x>50);
 
-duration = length(md.results.TransientSolution);
-if duration <= 10
+if length(md.results.TransientSolution) <= 10
 	return;
 end
 
@@ -33,10 +32,11 @@ mean_deltaN = mean(N_before-N_after);
 % 2. Get magnitude and location of slowdown
 
 vel_before = md.results.TransientSolution(flood_start_day-1).Vel;
-vel_after = md.results.TransientSolution(flood_start_day+3).Vel;
+vel_after = md.results.TransientSolution(flood_start_day+1).Vel;
+netVelChange = vel_after(upterminus) - vel_before(upterminus)
 [max_val, max_idx] = max(abs(vel_after(upterminus) - vel_before(upterminus)));
 maxVelDrop_x = md.mesh.x(max_idx); % this assumes that the max value is where the slowdown happens
-maxVelDrop = max_val;
+maxVelDrop = sign(netVelChange) * max_val;
 
 
 

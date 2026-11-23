@@ -19,15 +19,17 @@ for k = 1 : length(theFiles)
     
     fprintf('Now processing: %s\n', fullFileName);
 
-    load(fullFileName);
-    ei = englinp;
+
+    load(fullFileName)
+    day = outburst_day;
  
-    % Retrieve information
-    [meandeltaN, maxVelDropx, maxVelDrop] = AnalyzeParamSweepOutburst(md, 15, 60);
-    meandeltaNs(:, k) = [englinp, meandeltaN];
-    maxVelDropxs(:, k) = [englinp, maxVelDropx];
-    maxVelDrops(:, k) = [englinp, maxVelDrop];
-    
+    if length(md.results.TransientSolution) >= 10   
+        % Retrieve information
+   	 [meandeltaN, maxVelDropx, maxVelDrop] = AnalyzeParamSweepOutburst(md, 15, 60);
+   	 meandeltaNs(:, k) = [day, meandeltaN];
+   	 maxVelDropxs(:, k) = [day, maxVelDropx];
+    	maxVelDrops(:, k) = [day, maxVelDrop];
+    end
 end
 
-save(myFolder+"Summaries/data_outbursts_Nov9.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
+save(myFolder+"Summaries/data_seasonaloutbursts_Nov23.mat", 'meandeltaNs', 'maxVelDropxs', 'maxVelDrops', '-v7.3')
